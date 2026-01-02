@@ -4,9 +4,11 @@ import { toNodeHandler } from "better-auth/node";
 import { auth } from './lib/auth';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import morgan from 'morgan';
 dotenv.config();
 
 const app = express();
+app.use(morgan("dev"))
 
 app.use(cors({
     origin: process.env.BETTER_AUTH_URL as string,

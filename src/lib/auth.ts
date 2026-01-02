@@ -45,6 +45,7 @@ export const auth = betterAuth({
     sendOnSignUp: true,
     autoSignInAfterVerification: true,
     sendVerificationEmail: async ({ user, url, token }, request) => {
+      console.log(user, url, token)
       try {
         const verificationUrl = `${process.env.BETTER_AUTH_URL}/verify-email?token=${token}`;
         const info = await transporter.sendMail({
