@@ -11,7 +11,7 @@ const app = express();
 app.use(morgan("dev"))
 
 app.use(cors({
-    origin: process.env.BETTER_AUTH_URL as string,
+    origin: process.env.BETTER_AUTH_URL || "http://localhost:4000",
     credentials: true
 }));
 
