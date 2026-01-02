@@ -31,6 +31,11 @@ const getAllPosts = async (payload: { search: string | undefined }) => {
             mode: "insensitive",
           },
         },
+        {
+          tags: {
+            has: payload.search as string,
+          },
+        },
       ],
     },
   });
