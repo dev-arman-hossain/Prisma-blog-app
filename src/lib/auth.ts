@@ -6,7 +6,7 @@ import nodemailer from "nodemailer";
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 587,
-  secure: false, // Use true for port 465, false for port 587
+  secure: false,
   auth: {
     user: process.env.APP_USER,
     pass: process.env.APP_PASS,
@@ -17,7 +17,7 @@ export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),
-  trustedOrigins: [process.env.APP_URL!],
+  trustedOrigins: [process.env.BETTER_AUTH_URL!],
   user: {
     additionalFields: {
       role: {
@@ -46,7 +46,7 @@ export const auth = betterAuth({
     autoSignInAfterVerification: true,
     sendVerificationEmail: async ({ user, url, token }, request) => {
       try {
-        const verificationUrl = `${process.env.APP_URL}/verify-email?token=${token}`;
+        const verificationUrl = `${process.env.BETTER_AUTH_URL}/verify-email?token=${token}`;
         const info = await transporter.sendMail({
           from: '"Prisma Blog" <prismablog@ar.com>',
           to: user.email,

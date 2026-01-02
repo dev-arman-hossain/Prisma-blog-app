@@ -3,11 +3,13 @@ import { postRouter } from './modules/post/post.router';
 import { toNodeHandler } from "better-auth/node";
 import { auth } from './lib/auth';
 import cors from 'cors';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app = express();
 
 app.use(cors({
-    origin: process.env.APP_URL || 'http://localhost:4000',
+    origin: process.env.BETTER_AUTH_URL as string,
     credentials: true
 }));
 
