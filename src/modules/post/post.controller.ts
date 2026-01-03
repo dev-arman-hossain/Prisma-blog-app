@@ -1,5 +1,6 @@
 import type { Request, Response } from "express";
 import { PostService } from "./post.service";
+import paginationSortingHelper from "../../helpers/paginationSortingHelper";
 
 const createPost = async (req: Request, res: Response) => {
   try {
@@ -27,10 +28,19 @@ const getAllPosts = async (req: Request, res: Response) => {
         : undefined
       : undefined;
 
+    const { page, limit, skip, sortBy, sortOrder } = paginationSortingHelper(
+      req.query
+    );
+
     const result = await PostService.getAllPosts({
       search: searchString,
       tags,
       isFeatured,
+      page,
+      limit,
+      skip,
+      sortBy,
+      sortOrder,
     });
     res.status(200).json(result);
   } catch (err) {
