@@ -1,4 +1,3 @@
-import type { Request, Response } from "express";
 import type { post } from "../../../generated/prisma/client";
 import { prisma } from "../../lib/prisma";
 import { postWhereInput } from "../../../generated/prisma/models";

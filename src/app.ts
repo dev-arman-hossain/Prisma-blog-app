@@ -1,27 +1,31 @@
-import express from 'express';
-import { postRouter } from './modules/post/post.router';
+import express from "express";
+import { postRouter } from "./modules/post/post.router";
 import { toNodeHandler } from "better-auth/node";
-import { auth } from './lib/auth';
-import cors from 'cors';
-import dotenv from 'dotenv';
-import morgan from 'morgan';
+import { auth } from "./lib/auth";
+import cors from "cors";
+import dotenv from "dotenv";
+import morgan from "morgan";
+import { commentRouter } from "./modules/comment/comment.router";
 dotenv.config();
 
 const app = express();
-app.use(morgan("dev"))
+app.use(morgan("dev"));
 
-app.use(cors({
+app.use(
+  cors({
     origin: process.env.BETTER_AUTH_URL || "http://localhost:4000",
-    credentials: true
-}));
+    credentials: true,
+  })
+);
 
-app.all('/api/auth/*splat', toNodeHandler(auth));
+app.all("/api/auth/*splat", toNodeHandler(auth));
 
 app.use(express.json());
-app.use('/posts', postRouter);
+app.use("/posts", postRouter);
+app.use("/comments", commentRouter);
 
-app.get('/', (req, res) => {
-    res.send('Hello World!');
+app.get("/", (req, res) => {
+  res.send("Hello World!");
 });
 
 export default app;
