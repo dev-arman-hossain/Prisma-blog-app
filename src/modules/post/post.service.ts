@@ -123,6 +123,7 @@ const getPostById = async (id: string) => {
             parentId: null,
             status: comment_status.approved,
           },
+          orderBy:{createdAt: "asc"},
           include: {
             replies: {
               where: {
@@ -133,11 +134,15 @@ const getPostById = async (id: string) => {
                   where: {
                     status: comment_status.approved,
                   },
+                  orderBy:{createdAt: "asc"}
                 },
               },
             },
           },
         },
+        _count:{
+          select:{comments:true}
+        }
       },
     });
 
