@@ -1,4 +1,4 @@
-import type { post } from "../../../generated/prisma/client";
+import { comment_status, type post } from "../../../generated/prisma/client";
 import { prisma } from "../../lib/prisma";
 import { postWhereInput } from "../../../generated/prisma/models";
 
@@ -116,6 +116,28 @@ const getPostById = async (id: string) => {
     const postData = await tx.post.findUnique({
       where: {
         id: id,
+      },
+      include: {
+        comments: {
+          where: {
+            parentId: null,
+            status: comment_status.approved,
+          },
+          include: {
+            replies: {
+              where: {
+                status: comment_status.approved,
+              },
+              include: {
+                replies: {
+                  where: {
+                    status: comment_status.approved,
+                  },
+                },
+              },
+            },
+          },
+        },
       },
     });
 
