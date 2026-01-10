@@ -6,6 +6,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 import morgan from "morgan";
 import { commentRouter } from "./modules/comment/comment.router";
+import { PostController } from "./modules/post/post.controller";
+import { UserRole } from "./middleware/auth.middleware";
 dotenv.config();
 
 const app = express();
