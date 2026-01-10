@@ -112,10 +112,37 @@ const updatePost = async (req: Request, res: Response) => {
   }
 };
 
+const deletePost = async (req: Request, res: Response) => {
+  try {
+    const user = req.user;
+
+    if (!user) {
+      throw new Error("You are unauthorized!");
+    }
+
+    const { postId } = req.params;
+    const isAdmin = user.role === UserRole.ADMIN
+    console.log(user)
+
+    const result = await PostService.deletePost(
+      postId as string,
+      user.id, isAdmin
+    );
+    res.status(200).json(result);
+  } catch (e) {
+    console.log(e);
+    res.status(400).json({
+      error: "Post delete failed",
+      details: e,
+    });
+  }
+};
+
 export const PostController = {
   createPost,
   getAllPosts,
   getPostById,
   getMyPosts,
   updatePost,
+  deletePost
 };
